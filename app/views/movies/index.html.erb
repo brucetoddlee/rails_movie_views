@@ -16,19 +16,3 @@
 <%= link_to 'Add Movie to DB', new_movie_path %>
 <br>
 <br>
-
-
-<div class="container">
-
-	<p>Search for matching movies and add them to database</p>
-
-	<form class="form-inline" role="form" action="/result" method="post">
-	  <div class="form-group">
-	    <label class="sr-only" for="movie">Movie:</label>
-	    <input type="text" class="form-control" id="movie" name="movie" placeholder="Enter movie title">
-	  </div>
-	  
-	  <button name="commit" type="submit" class="btn btn-default" style="background-color:green; color: white;">Search</button>
-	</form>
-
-</div>

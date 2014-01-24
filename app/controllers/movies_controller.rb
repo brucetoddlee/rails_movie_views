@@ -20,17 +20,17 @@ class MoviesController < ApplicationController
     end
   end
 
-  #route: # POST   /movies/results(.:format)
+  # route: # POST   /movies/search
   def results
-    search_str = params[:movie]
+    term = params.require(:movie).permit(:search_term)["search_term"]
+    response = Typhoeus.get("www.omdbapi.com", :params => {:s => term})
+    result = JSON.parse(response.body)["Search"]
 
-    # Make a request to the omdb api here!
-    response = Typhoeus.get("http://www.omdbapi.com/", :params => { :s => search_str })
-    result = JSON.parse(response.body)
-    @movies_arr = result["Search"].sort{ |el1, el2| el1["Year"] <=> el2["Year"] }.reverse
-    
-    render :results
-  
+    result.each do |el|
+      @@movie_db << el
+    end
+
+    redirect_to action: :index
   end
 
   # route: # GET    /movies/:id(.:format)
